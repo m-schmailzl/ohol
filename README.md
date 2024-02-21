@@ -11,6 +11,8 @@ Dockerized game server for One Hour One Life by Jason Rohrer [https://onehourone
 
 New releases of the game are built automatically. The tag "latest" refers to the current stable version of the game.
 
+Feel free to open an issue on GitHub if a future version of the game does not work.
+
 This image is available for AMD64, i386, ARMv6 and ARM64, so you can run the game server e.g. on a Raspberry Pi or an Apple Silicon Mac, too.
 
 ## Usage
