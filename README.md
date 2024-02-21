@@ -16,7 +16,7 @@ This image is available for AMD64, i386, ARMv6 and ARM64, so you can run the gam
 ## Usage
 
 You can configure your server in the config files located at `/opt/OneLife/server/settings`.\
-Server data is saved at `/opt/OneLife/server/data`.
+Server save data is located at `/opt/OneLife/server/data`.
 
 ### Docker Compose
 

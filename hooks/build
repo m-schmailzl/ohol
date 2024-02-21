@@ -40,6 +40,9 @@ else
 fi
 
 echo "Building game version $GAME_VERSION..."
+
+GAME_VERSION="$GAME_VERSION" ./fetch.sh
+
 docker buildx create --name multiarch --use
 docker buildx build \
   $TAG_PARAM \

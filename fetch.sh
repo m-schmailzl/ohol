@@ -7,8 +7,6 @@ then
   exit 1
 fi
 
-cd /opt
-
 
 clone_and_get_version () {
   git clone --single-branch "https://github.com/jasonrohrer/$1.git"
@@ -17,7 +15,7 @@ clone_and_get_version () {
   # find newest available version older than GAME_VERSION
   version=""
   number=$((GAME_VERSION))
-  while (( number > GAME_VERSION-20 )) && [ -z "$version" ]
+  while (( number > GAME_VERSION-25 )) && [ -z "$version" ]
   do
     if [ $(git tag -l "OneLife_v$number") ]
     then
@@ -30,6 +28,7 @@ clone_and_get_version () {
   cd ..
   echo "$version"
 }
+
 
 MAIN_VERSION=$(clone_and_get_version OneLife)
 MINOR_GEMS_VERSION=$(clone_and_get_version minorGems)
