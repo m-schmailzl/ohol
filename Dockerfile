@@ -3,11 +3,10 @@ ARG GAME_VERSION
 
 RUN apt-get update && apt-get install -y git g++ make
 
-COPY fetch.sh /
-RUN chmod +x /fetch.sh && /fetch.sh
+# single checkout outside of docker is faster for multiarch builds
+COPY . /opt
 
-COPY build.sh /
-RUN chmod +x /build.sh && /build.sh
+RUN chmod +x /opt/build.sh && /opt/build.sh
 
 
 
