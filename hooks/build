@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [ -z "$PLATFORMS" ] || [[ $DOCKER_TAG = dev* ]]
+then
+  PLATFORMS="linux/amd64"
+fi
+
+if [ -z "$GAME_VERSION" ]
+then
+  if [ $DOCKER_TAG == "latest" ]
+  then
+    # set the "latest"-tag in the build command
+    TAG_PARAM="$TAG_PARAM -t $IMAGE_NAME"
+  fi
+
+  # get current stable game version (highest tag number of all three repositories)
+  for repo in OneLife minorGems OneLifeData7
+  do
+    git clone --filter=blob:none -n https://github.com/jasonrohrer/$repo.git tmp
+    version=$(git -C tmp describe --tags --abbrev=0 --match="OneLife_v*" HEAD | cut -f2 -d "v")
+    rm -rf tmp
+    if (( version > GAME_VERSION ))
+    then
+      GAME_VERSION="$version";
+    fi
+  done
+fi
+
+if [ -z "$GAME_VERSION" ]
+then
+  echo "The current game version could not be determined!"
+  exit 1
+fi
+
+if [ $DOCKER_TAG == "latest" ]
+then
+  TAG_PARAM="$TAG_PARAM -t $DOCKER_REPO:$GAME_VERSION"
+else
+  TAG_PARAM="$TAG_PARAM -t $DOCKER_REPO:$GAME_VERSION-$DOCKER_TAG"
+fi
+
+echo "Building game version $GAME_VERSION..."
+docker buildx create --name multiarch --use
+docker buildx build \
+  $TAG_PARAM \
+  --platform "$PLATFORMS" \
+  --build-arg GAME_VERSION=$GAME_VERSION \
+  --pull --push .
