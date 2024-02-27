@@ -14,4 +14,13 @@ do
 done
 cd ..
 
+if [ "$DISABLE_DECAY" == 1 ]
+then
+  echo "Removing decay transitions..."
+  while read line; do
+    rm -f "transitions/$line"
+  done <decayTransitions.txt
+  rm -f transitions/cache.fcz
+fi
+
 ./OneLifeServer
