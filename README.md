@@ -18,7 +18,12 @@ This image is available for AMD64, i386, ARMv6 and ARM64, so you can run the gam
 ## Usage
 
 You can configure your server in the config files located at `/opt/OneLife/server/settings`.\
-Server save data is located at `/opt/OneLife/server/data`.
+Server save data is located at `/opt/OneLife/server/data`.\
+
+You can set `DISABLE_DECAY` to disable object decay on your server.\
+I decided which transitions to remove in this case (game version v413).\
+You can generate your own list with `decideDecayTransitions.sh` and bind the resulting file to `/opt/OneLife/server/decayTransitions.txt` if you want to.\
+The container has to be recreated to reflect changes in `decayTransitions.txt`.
 
 ### Docker Compose
 
@@ -34,4 +39,6 @@ services:
       - ./settings:/opt/OneLife/server/settings
     ports:
       - "8005:8005"
+    environment:
+      - DISABLE_DECAY=1
 ```

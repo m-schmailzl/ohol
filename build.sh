@@ -37,3 +37,5 @@ ln -s data/recentPlacements.txt .
 
 mv settings default-settings
 mkdir settings
+
+mv ../../decayTransitions.txt .
